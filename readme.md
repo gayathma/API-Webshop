@@ -29,6 +29,7 @@ This is the implementation of a simplified mini webshop. It consists of customer
 ## Scenarios
 * Register Endpoint
 Method `POST` URL `/api/register`
+
 Headers
 ```
 Content-Type     : application/json
@@ -46,6 +47,7 @@ Body
 
 * Login Endpoint to get the token
 Method `POST` URL `/api/login`
+
 Headers
 ```
 Content-Type     : application/json
@@ -59,6 +61,42 @@ Body
 }
 ```
 ![Alt text](/screenshots/login.png?raw=true "Login Endpoint")
+
+* Create order Endpoint
+Method `POST` URL `/api/orders`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+Body
+```
+{
+	"customer_id": 50
+}
+```
+![Alt text](/screenshots/create.png?raw=true "Create Order Endpoint")
+
+* List orders Endpoint
+Method `GET` URL `/api/orders`
+
+Headers
+```
+Authorization : Bearer <token>
+```
+![Alt text](/screenshots/list.png?raw=true "List Orders Endpoint")
+
+
+* Show order Endpoint
+Method `GET` URL `/api/orders/<order_id>`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+![Alt text](/screenshots/show.png?raw=true "Show Order Endpoint")
 
 ## Tests
 
