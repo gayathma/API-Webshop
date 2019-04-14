@@ -27,8 +27,38 @@ This is the implementation of a simplified mini webshop. It consists of customer
 * you can create a new user using the 'Register' menu item. And then login into the system using the credentials.
 
 ## Scenarios
+* Register Endpoint
+Method `POST` URL `/api/register`
+Headers
+```
+Content-Type     : application/json
+X-Requested-With : XMLHttpRequest
+```
+Body
+```
+{
+"name": "Gemma_King2441",
+"email":"Gemma_King2441@cispeto.com",
+"password":"Gemma_King2441@cispeto.com"
+}
+```
+![Alt text](/screenshots/register.png?raw=true "Register Endpoint")
 
-
+* Login Endpoint to get the token
+Method `POST` URL `/api/login`
+Headers
+```
+Content-Type     : application/json
+X-Requested-With : XMLHttpRequest
+```
+Body
+```
+{
+"email":"Gemma_King2441@cispeto.com",
+"password":"Gemma_King2441@cispeto.com"
+}
+```
+![Alt text](/screenshots/login.png?raw=true "Login Endpoint")
 
 ## Tests
 
