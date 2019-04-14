@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Handler extends ExceptionHandler
 {
@@ -48,13 +49,12 @@ class Handler extends ExceptionHandler
     {
         // This will replace our 404 response with
         // a JSON response.
-        if ($exception instanceof ModelNotFoundException &&
-            $request->wantsJson()) {
+        if ($exception instanceof ModelNotFoundException && 
+            $request->isJson()) {
             return response()->json([
                 'error' => 'Resource not found'
             ], 404);
         }
-
         return parent::render($request, $exception);
     }
 }
