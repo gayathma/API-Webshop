@@ -98,6 +98,58 @@ Authorization       : Bearer <token>
 ```
 ![Alt text](/screenshots/show.png?raw=true "Show Order Endpoint")
 
+* Update order Endpoint
+Method `POST` URL `/api/orders/<order_id>`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+Body
+```
+{
+	"customer_id": 70
+}
+```
+![Alt text](/screenshots/update.png?raw=true "Update Order Endpoint")
+
+* Attach product to an order Endpoint
+Method `POST` URL `/api/orders/<order_id>/add`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+Body
+```
+{
+	"product_id": 57
+}
+```
+![Alt text](/screenshots/attach.png?raw=true "Attach Product to an Order Endpoint")
+
+* Pay order Endpoint
+Method `POST` URL `/api/orders/<order_id>/pay`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+![Alt text](/screenshots/pay.png?raw=true "Pay Order Endpoint")
+
+* Delete order Endpoint
+Method `DELETE` URL `/api/orders/<order_id>`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+![Alt text](/screenshots/delete.png?raw=true "Delete Order Endpoint")
+
 ## Tests
 
 * This API has been developed using Test Driven Development. PHPUnit is used to run the testcases. Navigate to the project root and run `composer test` after installing all the composer dependencies and after the .env file was created.
