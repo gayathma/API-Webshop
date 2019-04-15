@@ -1,4 +1,4 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+<p align="center">API Webshop</p>
 
 <p align="center">
 <a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
@@ -7,64 +7,152 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
 </p>
 
-## About Laravel
+## About API Webshop
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This is the implementation of a simplified mini webshop. It consists of customers, products and orders. The goal is first to import CSV files with some example data and then create an API for orders.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Installation
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+* type `git clone git@github.com:gayathma/API-Webshop.git` to clone the repository or download as a zip file and unzip it in your folder.  
+* type `cd API-Webshop`
+* type composer install
+* copy *.env.example* to *.env*
+* create database `api_webshop` using mysql 
+* update `DB_DATABASE, DB_USERNAME, DB_PASSWORD` values in .env file
+* this application require php 7.1.3 or higher version.
+* type `php artisan migrate` to migrate the user tables
+* type `php artisan passport:install` to install laravel passport 
+* type `php artisan db:seed` to seed the master data from csv files
+* type `php artisan serve` with the given url you can access the application in the browser
+* you can create a new user using the 'Register' menu item. And then login into the system using the credentials.
 
-## Learning Laravel
+## Scenarios
+* Register Endpoint
+Method `POST` URL `/api/register`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+Headers
+```
+Content-Type     : application/json
+X-Requested-With : XMLHttpRequest
+```
+Body
+```
+{
+"name": "Gemma_King2441",
+"email":"Gemma_King2441@cispeto.com",
+"password":"Gemma_King2441@cispeto.com"
+}
+```
+![Alt text](/screenshots/register.png?raw=true "Register Endpoint")
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost you and your team's skills by digging into our comprehensive video library.
+* Login Endpoint to get the token
+Method `POST` URL `/api/login`
 
-## Laravel Sponsors
+Headers
+```
+Content-Type     : application/json
+X-Requested-With : XMLHttpRequest
+```
+Body
+```
+{
+"email":"Gemma_King2441@cispeto.com",
+"password":"Gemma_King2441@cispeto.com"
+}
+```
+![Alt text](/screenshots/login.png?raw=true "Login Endpoint")
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+* Create order Endpoint
+Method `POST` URL `/api/orders`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+Body
+```
+{
+	"customer_id": 50
+}
+```
+![Alt text](/screenshots/create.png?raw=true "Create Order Endpoint")
 
-## Contributing
+* List orders Endpoint
+Method `GET` URL `/api/orders`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Headers
+```
+Authorization : Bearer <token>
+```
+![Alt text](/screenshots/list.png?raw=true "List Orders Endpoint")
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+* Show order Endpoint
+Method `GET` URL `/api/orders/<order_id>`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+![Alt text](/screenshots/show.png?raw=true "Show Order Endpoint")
+
+* Update order Endpoint
+Method `POST` URL `/api/orders/<order_id>`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+Body
+```
+{
+	"customer_id": 70
+}
+```
+![Alt text](/screenshots/update.png?raw=true "Update Order Endpoint")
+
+* Attach product to an order Endpoint
+Method `POST` URL `/api/orders/<order_id>/add`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+Body
+```
+{
+	"product_id": 57
+}
+```
+![Alt text](/screenshots/attach.png?raw=true "Attach Product to an Order Endpoint")
+
+* Pay order Endpoint
+Method `POST` URL `/api/orders/<order_id>/pay`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+![Alt text](/screenshots/pay.png?raw=true "Pay Order Endpoint")
+
+* Delete order Endpoint
+Method `DELETE` URL `/api/orders/<order_id>`
+
+Headers
+```
+Content-Type        : application/json
+Authorization       : Bearer <token>
+```
+![Alt text](/screenshots/delete.png?raw=true "Delete Order Endpoint")
+
+## Tests
+
+* This API has been developed using Test Driven Development. PHPUnit is used to run the testcases. Navigate to the project root and run `composer test` after installing all the composer dependencies and after the .env file was created.
 
 ## License
 
