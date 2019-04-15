@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Order;
 use App\User;
 use App\Customer;
+use App\Product;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -15,8 +16,10 @@ class OrderTest extends TestCase
     {
         $headers = $this->getHeaders();
 
+        $customer = factory(Customer::class)->create();
+
         $order = [
-            'customer_id' => 1
+            'customer_id' => $customer->id
         ];
 
         $this->json('POST', '/api/orders', $order, $headers)
@@ -27,6 +30,8 @@ class OrderTest extends TestCase
     {
         $headers = $this->getHeaders();
 
+        $order = factory(Order::class)->create();
+
         $this->json('GET', '/api/orders', [], $headers)
             ->assertStatus(200);
     }
@@ -35,7 +40,9 @@ class OrderTest extends TestCase
     {
         $headers = $this->getHeaders();
 
-        $this->json('GET', '/api/orders/1', [], $headers)
+         $order = factory(Order::class)->create();
+
+        $this->json('GET', '/api/orders/'.$order->id, [], $headers)
             ->assertStatus(200);
     }
 
@@ -43,11 +50,14 @@ class OrderTest extends TestCase
     {
         $headers = $this->getHeaders();
 
+        $order = factory(Order::class)->create();
+        $product = factory(Product::class)->create();
+
         $data = [
-            'product_id' => 57
+            'product_id' => $product->id
         ];
 
-        $this->json('POST', '/api/orders/1/add', $data, $headers)
+        $this->json('POST', '/api/orders/'. $order->id .'/add', $data, $headers)
             ->assertStatus(200);
     }
 
@@ -55,12 +65,15 @@ class OrderTest extends TestCase
     {
         $headers = $this->getHeaders();
 
+        $order = factory(Order::class)->create();
+        $customer = factory(Customer::class)->create();
+
         $data = [
-            'customer_id' => 2,
+            'customer_id' => $customer->id,
             'payed' => 'n'
         ];
 
-        $this->json('PUT', '/api/orders/1', $data, $headers)
+        $this->json('PUT', '/api/orders/'.$order->id, $data, $headers)
             ->assertStatus(200);
     }
 
@@ -68,7 +81,9 @@ class OrderTest extends TestCase
     {
         $headers = $this->getHeaders();
 
-        $this->json('DELETE', '/api/orders/1', [], $headers)
+        $order = factory(Order::class)->create();
+
+        $this->json('DELETE', '/api/orders/'.$order->id, [], $headers)
             ->assertStatus(200);
     }
 
